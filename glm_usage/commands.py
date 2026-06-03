@@ -81,17 +81,17 @@ def _build_token_result(token: str, days: int | None = None,
     start = now - (timedelta(days=days) if days is not None else timedelta(hours=hours))
     time_fmt = "%Y-%m-%d %H:%M:%S"
     data = fetch_model_usage(token, start.strftime(time_fmt), now.strftime(time_fmt))["data"]
-    total_tokens = data["totalUsage"]["totalTokensUsage"]
+    total_usage = data["totalUsage"]
     return {
         "period": {
             "start": start.strftime("%Y-%m-%d %H:%M"),
             "end": now.strftime("%Y-%m-%d %H:%M"),
         },
-        "totalTokens": total_tokens,
-        "totalCalls": data["totalUsage"]["totalModelCallCount"],
+        "totalTokens": total_usage["totalTokensUsage"],
+        "totalPrompts": total_usage["totalModelCallCount"],
         "models": [
             {"name": m["modelName"], "tokens": m["totalTokens"]}
-            for m in data["totalUsage"]["modelSummaryList"]
+            for m in total_usage["modelSummaryList"]
         ],
     }
 
@@ -107,6 +107,7 @@ def show_token(token: str, days: int | None = None, hours: int | None = None,
     result = _build_token_result(token, days=days, hours=hours)
     period = f"过去 {days} 天" if days is not None else f"过去 {hours} 小时"
     total_tokens = result["totalTokens"]
+    total_prompts = result["totalPrompts"]
     models = result["models"]
 
     col_model, col_tokens, col_pct = "模型", "Token 消耗", "占比"
@@ -123,3 +124,4 @@ def show_token(token: str, days: int | None = None, hours: int | None = None,
         print(f"  {pad(name, model_w)} {fmt_tokens(tokens):<{token_w}} {pct:.1f}%")
     print(f"  {'─' * (model_w + token_w + 10)}")
     print(f"  {pad('合计', model_w)} {fmt_tokens(total_tokens):<{token_w}}")
+    print(f"  {pad('Prompts', model_w)} {total_prompts}")
