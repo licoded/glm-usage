@@ -1,6 +1,6 @@
-# glm_usage
+# GLM Usage
 
-**[English](README_EN.md)**
+中文 | [English](README_EN.md)
 
 [GLM Coding Plan](https://docs.z.ai) 用量查询 CLI 工具。支持查看配额用量、Token 消耗明细，以及 JSON 格式输出。
 

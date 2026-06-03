@@ -1,6 +1,6 @@
-# glm_usage
+# GLM Usage
 
-**[中文](README.md)**
+English | [中文](README.md)
 
 A CLI tool for querying [GLM Coding Plan](https://docs.z.ai) usage statistics. View quota consumption, token usage breakdown, and JSON output.
 
