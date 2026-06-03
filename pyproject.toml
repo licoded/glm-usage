@@ -1,0 +1,8 @@
+[project]
+name = "glm-usage"
+version = "0.1.0"
+description = "查询 GLM Coding Plan 用量统计"
+requires-python = ">=3.10"
+
+[project.scripts]
+glm_usage = "glm_usage:main"
